@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"os/exec"
+	"runtime"
 	"time"
+
+	"github.com/gen2brain/beeep"
 )
 
 type timer struct {
@@ -28,7 +31,11 @@ func (t timer) alert() {
 		message = "Back to work"
 	}
 	fmt.Println(message)
-	exec.Command("say", message).Output()
+	os := runtime.GOOS
+	if os == "darwin" {
+		go exec.Command("say", message).Output()
+	}
+	beeep.Notify(message, message, "assets/information.png")
 }
 
 func (t timer) shouldSwitchMode(elapsed int) bool {
