@@ -32,7 +32,7 @@ func (t timer) alert() {
 	}
 	fmt.Println(message)
 	os := runtime.GOOS
-	if os == "darwin" {
+	if os == "darwin" && !isQuietTime() {
 		go exec.Command("say", message).Output()
 	}
 	beeep.Notify(message, message, "assets/information.png")
