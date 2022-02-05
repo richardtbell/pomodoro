@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"github.com/gen2brain/beeep"
+	"fyne.io/fyne/v2/widget"
+
 )
 
 type timer struct {
@@ -57,9 +59,25 @@ func (t timer) getMode() string {
 	return mode
 }
 
-func (t timer) printTimeRemaining(elapsed int) {
+func (t timer) printTimeRemaining(elapsed int, clock *widget.Label) {
 	timeRemaining := t.getDuration() - elapsed
 	minutes := timeRemaining / 60
 	seconds := timeRemaining - minutes*60
-	fmt.Printf("\r%v: %02d:%02d", t.getMode(), minutes, seconds)
+	updatedTime := fmt.Sprintf("\r%v: %02d:%02d", t.getMode(), minutes, seconds)
+	clock.SetText(updatedTime)
+}
+
+func (t timer) updateTime(clock *widget.Label) {
+	prevElapsed := 0
+	for {
+		elapsed := t.getElapsedTimeInSeconds()
+		if elapsed != prevElapsed {
+			t.printTimeRemaining(elapsed, clock)
+			prevElapsed = elapsed
+			if t.shouldSwitchMode(elapsed) {
+				t.alert()
+				t.switchMode()
+			}
+		}
+	}
 }

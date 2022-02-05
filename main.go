@@ -5,12 +5,18 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/widget"
 )
 
 const defaultWorkDurationInMins = 25
 const defaultRestDurationInMins = 5
 
 func main() {
+	a := app.New()
+	win := a.NewWindow("Pomodoro")
+	clock := widget.NewLabel("")
 	workDurationInMins := defaultWorkDurationInMins
 	restDurationInMins := defaultRestDurationInMins
 	if len(os.Args) != 3 {
@@ -31,16 +37,8 @@ func main() {
 		workDuration: workDurationInMins * 60,
 		restDuration: restDurationInMins * 60,
 	}
-	prevElapsed := 0
-	for {
-		elapsed := t.getElapsedTimeInSeconds()
-		if elapsed != prevElapsed {
-			t.printTimeRemaining(elapsed)
-			prevElapsed = elapsed
-			if t.shouldSwitchMode(elapsed) {
-				t.alert()
-				t.switchMode()
-			}
-		}
-	}
+
+    go t.updateTime(clock)
+	win.SetContent(clock)
+	win.ShowAndRun()
 }
