@@ -1,4 +1,4 @@
-A simple pomodoro timer created in Go. 
+A simple pomodoro timer created in Go.
 
 It will run on the command line and give you an alert when you need to "Take a break" or "Get back to work". The alerts currently only work on Mac OS using the "say" api.
 
@@ -9,4 +9,5 @@ It will run on the command line and give you an alert when you need to "Take a b
 `./main 40 10` will run with the custom tihttps://medium.com/geekculture/learn-golang-with-me-aca95c29587mes of 40 minutes working and 10 minutes resting. You can change these times however you like.
 
 # Purpose
-This project was created as a tutorial on some Go concepts. You can read the [tutorial series on Medium](https://medium.com/geekculture/learn-golang-with-me-aca95c29587)
+
+This project was created as a tutorial on some Go concepts. You can read the [tutorial series on Medium](https://medium.com/@richard-t-bell90/list/learn-golang-with-me-making-a-pomodoro-timer-9b5e9ef178e6)
